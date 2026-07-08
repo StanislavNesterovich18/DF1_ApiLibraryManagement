@@ -15,7 +15,7 @@ class BookViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ["create", "list", "retrieve", "update", "destroy", "partial_update"]:
-            self.permission_classes = []
+            self.permission_classes = [IsAuthenticated]
         return [permission() for permission in self.permission_classes]
 
 
