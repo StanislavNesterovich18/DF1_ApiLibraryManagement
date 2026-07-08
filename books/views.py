@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from books.filters import BookFilter
-from books.models import Book, Author
-from books.serializers import BookSerializer, AuthorSerializer
+from books.models import Author, Book
+from books.serializers import AuthorSerializer, BookSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):

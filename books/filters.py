@@ -1,6 +1,6 @@
 import django_filters
 
-from books.models import Book, Author
+from books.models import Author, Book
 
 
 class BookFilter(django_filters.rest_framework.FilterSet):

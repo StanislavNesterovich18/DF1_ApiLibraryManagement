@@ -6,13 +6,13 @@ import django
 from django.urls import reverse
 from rest_framework import status
 
-
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 from django.conf import settings
 from rest_framework.test import APITestCase
-from users.models import User
+
 from books.models import Author
+from users.models import User
 
 
 class BooksTestCase(APITestCase):

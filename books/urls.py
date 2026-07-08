@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from books.views import BookViewSet, AuthorViewSet
+from books.views import AuthorViewSet, BookViewSet
 
 app_name = 'books'
 
