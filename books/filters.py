@@ -4,6 +4,7 @@ from books.models import Author, Book
 
 
 class BookFilter(django_filters.rest_framework.FilterSet):
+    """Фильтр для модели Book."""
     author = django_filters.ModelChoiceFilter(
         field_name="author", queryset=Author.objects.all(), label="Автор"
     )
@@ -20,6 +21,7 @@ class BookFilter(django_filters.rest_framework.FilterSet):
 
 
 class AuthorFilter(django_filters.rest_framework.FilterSet):
+    """Фильтр для модели Author."""
     class Meta:
         model = Author
         exclude = ['avatar_image']

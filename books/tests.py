@@ -16,10 +16,16 @@ from users.models import User
 
 
 class BooksTestCase(APITestCase):
+    """    Набор тестов для API управления книгами. Тестирует все CRUD операции с книгами:"""
     id_book = 0
 
     def setUp(self):
-        """Выполняется перед каждым тестом: готовим данные."""
+        """Подготовка данных перед каждым тестом.
+        Создает:
+            - Тестового пользователя с email "test@test.com"
+            - Аутентифицирует клиент
+            - Создает тестового автора "А.С. Пушкин"
+        Выполняется перед каждым тестом: готовим данные."""
         super().setUp()
         self.user = User.objects.create(
             email="test@test.com",
@@ -30,11 +36,15 @@ class BooksTestCase(APITestCase):
         )
 
     def test_book_create_wrong(self):
+        """Тест создания книги с некорректными данными. Проверяет, что при отправке невалидных данных
+        (несуществующие поля) API возвращает ошибку 400. Ожидаемый результат: HTTP 400 Bad Request"""
         url = reverse("books:book-list")
         response = self.client.post(url, data={'name': 'Test Lesson', 'url_video': 'Test book'})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_book_create(self):
+        """Тест успешного создания книги. Проверяет создание книги со всеми обязательными полями.
+        Сохраняет ID созданной книги для использования в других тестах."""
         url = reverse("books:book-list")
         response = self.client.post(url, data={'name_book': "Test book",
                                                'number_pages': "123",
@@ -51,12 +61,19 @@ class BooksTestCase(APITestCase):
         self.id_book = data['id']
 
     def test_book_retrieve(self):
+        """      Тест получения детальной информации о книге.
+        Создает книгу через test_book_create и запрашивает ее данные.
+        Ожидаемый результат: HTTP 200 OK"""
         self.test_book_create()
         url = reverse("books:book-detail", kwargs={'pk': self.id_book})
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_book_update(self):
+        """ Тест обновления данных книги. Создает книгу, затем обновляет ее название.
+        Ожидаемый результат:
+            - HTTP 200 OK
+            - Название книги обновлено на "Test book NEW" """
         self.test_book_create()
         url = reverse("books:book-detail", kwargs={'pk': self.id_book})
         response = self.client.put(url, data={'name_book': "Test book NEW",
